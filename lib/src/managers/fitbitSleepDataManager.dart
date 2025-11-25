@@ -1,3 +1,4 @@
+import 'package:fitbitter/src/data/fitbitSleepSummaryData.dart';
 import 'package:logger/logger.dart';
 
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
@@ -31,6 +32,50 @@ class FitbitSleepDataManager extends FitbitDataManager {
         _extractFitbitSleepData(response, fitbitUrl.fitbitCredentials!.userID);
     return sleepDataPoints;
   } // fetch
+
+  Future<List<FitbitSleepSummaryData>> fetchSummaryData(
+      FitbitAPIURL fitbitUrl) async {
+    // Get the response
+    final response = await getResponse(fitbitUrl);
+
+    // Debugging
+    final logger = Logger();
+    logger.i('$response');
+
+    //Extract data and return them
+    List<FitbitSleepSummaryData> sleepDataPoints =
+        _extractFitbitSleepSummaryData(
+            response, fitbitUrl.fitbitCredentials!.userID);
+    return sleepDataPoints;
+  } // fetch
+
+  /// A private method that extracts [FitbitSleepData] from the given response.
+  List<FitbitSleepSummaryData> _extractFitbitSleepSummaryData(
+      dynamic response, String? userId) {
+    final nRecords = response["sleep"].length;
+
+    List<FitbitSleepSummaryData> sleepDataPoints =
+        List<FitbitSleepSummaryData>.empty(growable: true);
+
+    for (var record = 0; record < nRecords; record++) {
+      final minAsleep = response["sleep"][record]["minutesAsleep"];
+      final minAwake = response["sleep"][record]["minutesAwake"];
+
+      final DateTime dateOfSleep =
+          DateTime.parse(response["sleep"][record]["dateOfSleep"]);
+
+      FitbitSleepSummaryData sleepSummaryData = FitbitSleepSummaryData(
+        userID: userId,
+        dateOfSleep: dateOfSleep,
+        sleepDuration: Duration(
+          minutes: minAsleep - minAwake,
+        ),
+      );
+
+      sleepDataPoints.add(sleepSummaryData);
+    } // for nRecords
+    return sleepDataPoints;
+  } // _extractFitbitSleepData
 
   /// A private method that extracts [FitbitSleepData] from the given response.
   List<FitbitSleepData> _extractFitbitSleepData(
