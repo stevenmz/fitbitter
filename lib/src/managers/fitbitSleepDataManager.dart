@@ -68,7 +68,7 @@ class FitbitSleepDataManager extends FitbitDataManager {
         userID: userId,
         dateOfSleep: dateOfSleep,
         sleepDuration: Duration(
-          minutes: minAsleep - minAwake,
+          minutes: minAsleep,
         ),
       );
 
