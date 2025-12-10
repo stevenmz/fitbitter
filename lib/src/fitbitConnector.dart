@@ -130,7 +130,7 @@ class FitbitConnector {
         ),
       );
     } on DioException catch (e) {
-      if (e.response!.statusCode == 401) {
+      if (e.response == null || e.response!.statusCode == 401) {
         return false;
       }
     }
