@@ -33,7 +33,8 @@ abstract class FitbitDataManager {
   /// Method the obtains the response from the given [FitbitAPIURL].
   Future<dynamic> getResponse(FitbitAPIURL fitbitUrl) async {
     //Check access token
-    await _checkAccessToken(fitbitUrl);
+    // NOTE: SMZ 11/29/25: Make app handle its own access token refresh because this does not return the new credential!!!
+    // await _checkAccessToken(fitbitUrl);
 
     // Instantiate Dio and its Response
     Dio dio = Dio();

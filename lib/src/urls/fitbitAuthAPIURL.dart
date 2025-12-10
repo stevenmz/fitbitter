@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:fitbitter/src/fitbitConnector.dart';
 import 'package:fitbitter/src/urls/fitbitAPIURL.dart';
 
-enum FitbitAuthScope{
+enum FitbitAuthScope {
   ACTIVITY,
   CARDIO_FITNESS,
   HEART_RATE,
@@ -56,20 +56,19 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
       url: '${_getBaseURL()}/token',
       fitbitCredentials: fitbitCredentials,
       data:
-          'client_id=$clientID&grant_type=refresh_token&refresh_token=${fitbitCredentials.fitbitRefreshToken}',
+          'grant_type=refresh_token&refresh_token=${fitbitCredentials.fitbitRefreshToken}',
       authorizationHeader: 'Basic $authorizationHeader',
     );
   } // FitbitAuthAPIURL.refreshToken
 
   /// Factory constructor that generates a [FitbitAuthAPIURL] to be used
   /// to get to the fitbit authorization form.
-  factory FitbitAuthAPIURL.authorizeForm(
-      {
-        required String redirectUri, 
-        required List<FitbitAuthScope> scopeList,
-        required int expiresIn,
-        String? clientID, 
-      }) {
+  factory FitbitAuthAPIURL.authorizeForm({
+    required String redirectUri,
+    required List<FitbitAuthScope> scopeList,
+    required int expiresIn,
+    String? clientID,
+  }) {
     // Encode the redirectUri
     final String encodedRedirectUri = Uri.encodeFull(redirectUri);
     final String scope = _getScope(scopeList);
@@ -141,47 +140,47 @@ class FitbitAuthAPIURL extends FitbitAPIURL {
     return 'https://api.fitbit.com/oauth2';
   } // _getBaseURL
 
-  static String _getScope(List<FitbitAuthScope> scopeList){
+  static String _getScope(List<FitbitAuthScope> scopeList) {
     String scope = '';
-    if (scopeList.contains(FitbitAuthScope.ACTIVITY)){
+    if (scopeList.contains(FitbitAuthScope.ACTIVITY)) {
       scope += 'activity%20';
     }
-    if (scopeList.contains(FitbitAuthScope.CARDIO_FITNESS)){
+    if (scopeList.contains(FitbitAuthScope.CARDIO_FITNESS)) {
       scope += 'cardio_fitness%20';
     }
-    if (scopeList.contains(FitbitAuthScope.HEART_RATE)){
+    if (scopeList.contains(FitbitAuthScope.HEART_RATE)) {
       scope += 'heartrate%20';
     }
-    if (scopeList.contains(FitbitAuthScope.LOCATION)){
+    if (scopeList.contains(FitbitAuthScope.LOCATION)) {
       scope += 'location%20';
     }
-    if (scopeList.contains(FitbitAuthScope.NUTRITION)){
+    if (scopeList.contains(FitbitAuthScope.NUTRITION)) {
       scope += 'nutrition%20';
     }
-    if (scopeList.contains(FitbitAuthScope.PROFILE)){
+    if (scopeList.contains(FitbitAuthScope.PROFILE)) {
       scope += 'profile%20';
     }
-    if (scopeList.contains(FitbitAuthScope.SETTINGS)){
+    if (scopeList.contains(FitbitAuthScope.SETTINGS)) {
       scope += 'settings%20';
     }
-    if (scopeList.contains(FitbitAuthScope.SLEEP)){
+    if (scopeList.contains(FitbitAuthScope.SLEEP)) {
       scope += 'sleep%20';
     }
-    if (scopeList.contains(FitbitAuthScope.SOCIAL)){
+    if (scopeList.contains(FitbitAuthScope.SOCIAL)) {
       scope += 'social%20';
     }
-    if (scopeList.contains(FitbitAuthScope.WEIGHT)){
+    if (scopeList.contains(FitbitAuthScope.WEIGHT)) {
       scope += 'weight%20';
     }
-    if (scopeList.contains(FitbitAuthScope.OXYGEN_SATURATION)){
+    if (scopeList.contains(FitbitAuthScope.OXYGEN_SATURATION)) {
       scope += 'oxygen_saturation%20';
     }
-    if (scopeList.contains(FitbitAuthScope.RESPIRATORY_RATE)){
+    if (scopeList.contains(FitbitAuthScope.RESPIRATORY_RATE)) {
       scope += 'respiratory_rate%20';
     }
-    if (scopeList.contains(FitbitAuthScope.TEMPERATURE)){
+    if (scopeList.contains(FitbitAuthScope.TEMPERATURE)) {
       scope += 'temperature%20';
     }
     return scope;
-  }//_getScope
+  } //_getScope
 } // FitbitAuthAPIURL

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'package:logger/logger.dart';
 
@@ -82,6 +83,9 @@ class FitbitConnector {
         clientID: clientID,
         clientSecret: clientSecret,
         fitbitCredentials: fitbitCredentials);
+
+    debugPrint(
+        "refreshToken method before call: URL: ${fitbitUrl.url} Data: ${fitbitUrl.data} authorizationHeader: ${fitbitUrl.authorizationHeader}");
 
     // Post refresh query to Fitbit API
     response = await dio.post(
@@ -218,7 +222,7 @@ class FitbitConnector {
           fitbitAccessToken: accessToken,
           fitbitRefreshToken: refreshToken);
     } catch (e) {
-      print(e);
+      debugPrint("Error in fitbit authorize: ${e.toString()}");
     } // catch
 
     return fitbitCredentials;
